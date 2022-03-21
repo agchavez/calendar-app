@@ -51,7 +51,10 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
     "@types/react-big-calendar": "^0.36.2",
-    "@types/react-datepicker": "^4.3.4"
+    "@types/react-datepicker": "^4.3.4",
+    "husky": "^4.3.8"
   }
 }
