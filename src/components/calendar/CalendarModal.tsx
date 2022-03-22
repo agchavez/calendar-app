@@ -14,9 +14,8 @@ export const CalendarModal = ({ show, onHide }: CalendarModalProps) => {
         <Modal.Title>Agregar nuevo evento</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h1> Nuevo evento </h1>
-        <hr />
         <FormEvent onSubmit={(event: any) => {}} />
+        <hr />u
       </Modal.Body>
     </Modal>
   );

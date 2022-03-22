@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavBar } from "../ui/NavBar";
 import { Container } from "react-bootstrap";
 
-import moment from "moment";
-import "moment/locale/es";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import { messages } from "../../helpers/calendar-menssage";
 import { CalendarEvent } from "./CalendarEvent";
 import { CalendarData } from "../../interfaces/Calendar";
 import { CalendarModal } from "./CalendarModal";
-//Crear una interfas de dato para el calendari
 
+import { useDispatch } from "react-redux";
+
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import styles from "../../style/styles.module.css";
+
+import moment from "moment";
+import "moment/locale/es";
 moment.locale("es");
 
 const events: CalendarData[] = [
@@ -29,9 +32,12 @@ const events: CalendarData[] = [
 ];
 
 export const CalendarScreen = () => {
+  const dispatch = useDispatch();
   const [lastView, setlastView] = useState(
     localStorage.getItem("lastView") || "month"
   );
+
+  const [open, setopen] = useState(false);
   const onDobleClick = (e: any) => {
     console.log(e);
   };
@@ -43,6 +49,10 @@ export const CalendarScreen = () => {
   const onViewChange = (e: any) => {
     setlastView(e);
     localStorage.setItem("lastView", e);
+  };
+
+  const handleAddNewEvent = () => {
+    setopen(true);
   };
 
   const eventStyleGetter = (
@@ -69,6 +79,7 @@ export const CalendarScreen = () => {
   return (
     <>
       <NavBar />
+
       <Container fluid className="px-3">
         <h1>Calendario</h1>
         <Calendar
@@ -87,8 +98,23 @@ export const CalendarScreen = () => {
           onView={onViewChange}
           view={lastView as any}
         />
+        <button
+          type="button"
+          className={`btn ${styles.elevationButton}`}
+          onClick={handleAddNewEvent}
+        >
+          <span
+            style={{
+              color: "#fff",
+              margin: "auto",
+              display: "grid",
+            }}
+          >
+            <i className="fas fa-plus"></i>
+          </span>
+        </button>
 
-        <CalendarModal show={true} onHide={() => {}} event />
+        <CalendarModal show={open} onHide={() => setopen(false)} event />
       </Container>
     </>
   );
