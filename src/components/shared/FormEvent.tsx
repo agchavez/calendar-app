@@ -4,9 +4,10 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { Event } from "react-big-calendar";
+import { CalendarData } from "../../interfaces/Calendar";
 interface IFormEventProps {
   onSubmit: (event: Event) => void;
-  initialValues?: Event;
+  initialValues?: CalendarData | null;
 }
 
 const validationSchema = Yup.object().shape({
@@ -16,14 +17,12 @@ const validationSchema = Yup.object().shape({
   allDay: Yup.boolean().required("El campo todo el día es requerido"),
 });
 
-export const FormEvent = ({ onSubmit }: IFormEventProps) => {
-  const handleSave = (event: Event) => {
-    console.log(event);
-  };
+export const FormEvent = ({ onSubmit, initialValues }: IFormEventProps) => {
+  const handleSave = (event: Event) => {};
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
-      initialValues: {
+      initialValues: initialValues || {
         title: "",
         describe: "",
         start: new Date(),
@@ -57,21 +56,6 @@ export const FormEvent = ({ onSubmit }: IFormEventProps) => {
               {errors.title && touched.title ? errors.title : ""}
             </span>
           )}
-        </div>
-        <div className="form-floating mt-3">
-          <textarea
-            className={`form-control ${
-              errors.describe && touched.describe ? "is-invalid" : ""
-            }`}
-            placeholder="Leave a comment here"
-            id="floatingTextarea2"
-            value={values.describe}
-            onChange={handleChange}
-            style={{
-              height: "100px",
-            }}
-          ></textarea>
-          <label>Descripcion</label>
         </div>
 
         <div className="form-group mt-3">

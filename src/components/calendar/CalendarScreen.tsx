@@ -16,6 +16,9 @@ import styles from "../../style/styles.module.css";
 
 import moment from "moment";
 import "moment/locale/es";
+import { ActionTypes } from "../../state/types/types";
+import { EventActionTypes } from "../../state/actions/eventAction";
+import { useAppDispatch } from "../../hooks/redux";
 moment.locale("es");
 
 const events: CalendarData[] = [
@@ -32,7 +35,7 @@ const events: CalendarData[] = [
 ];
 
 export const CalendarScreen = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [lastView, setlastView] = useState(
     localStorage.getItem("lastView") || "month"
   );
@@ -43,7 +46,16 @@ export const CalendarScreen = () => {
   };
 
   const onSelectEvent = (e: CalendarData) => {
-    console.log(e);
+    dispatch({
+      type: ActionTypes.EVENTSELECTED,
+      payload: e,
+    });
+    dispatch({
+      type: ActionTypes.UIMODALOPEN,
+      payload: {
+        open: true,
+      },
+    });
   };
 
   const onViewChange = (e: any) => {
@@ -52,7 +64,12 @@ export const CalendarScreen = () => {
   };
 
   const handleAddNewEvent = () => {
-    setopen(true);
+    dispatch({
+      type: ActionTypes.UIMODALOPEN,
+      payload: {
+        open: true,
+      },
+    });
   };
 
   const eventStyleGetter = (
@@ -114,7 +131,7 @@ export const CalendarScreen = () => {
           </span>
         </button>
 
-        <CalendarModal show={open} onHide={() => setopen(false)} event />
+        <CalendarModal />
       </Container>
     </>
   );
