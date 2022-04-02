@@ -4,7 +4,7 @@ import { IUser } from "../../interfaces/User";
 interface LoginAction {
   type: ActionTypes.AUTHLOGIN;
   payLoad: {
-    user: IUser | null;
+    user: IUser;
   };
 }
 

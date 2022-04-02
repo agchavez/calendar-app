@@ -3,14 +3,18 @@ import { IUser } from "../../interfaces/User";
 import { AuthActionTypes } from "../actions/authAction";
 export interface IAuthState {
   checking?: boolean;
-  user: IUser | null;
+  user: IUser;
   error: any;
   loading: boolean;
 }
 
 const initialState: IAuthState = {
   checking: false,
-  user: null,
+  user: {
+    email: "",
+    firstName: "",
+    lastName: "",
+  },
   error: null,
   loading: false,
 };
@@ -30,6 +34,11 @@ export const authReducer = (
       return {
         ...state,
         loading: action.payload,
+      };
+    case ActionTypes.AUTHLOGOUT:
+      return {
+        ...state,
+        checking: false,
       };
     default:
       return state;

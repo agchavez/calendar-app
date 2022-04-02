@@ -7,5 +7,6 @@ export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
-  isActive: boolean;
+  password?: string;
+  isActive?: boolean;
 }
