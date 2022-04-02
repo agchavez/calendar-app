@@ -73,6 +73,8 @@ export const FormEvent = ({ onSubmit, initialValues }: IFormEventProps) => {
                 },
               });
             }}
+            showTimeSelect
+            dateFormat="Pp"
           />
           {errors.start && touched.start && (
             <span className="invalid-feedback">
@@ -85,6 +87,7 @@ export const FormEvent = ({ onSubmit, initialValues }: IFormEventProps) => {
           <label htmlFor="describe">Fecha de final</label>
           <DatePicker
             selected={values.end}
+            showTimeSelect
             className={`form-control ${
               errors.end && touched.end ? "is-invalid" : ""
             }`}
@@ -96,6 +99,7 @@ export const FormEvent = ({ onSubmit, initialValues }: IFormEventProps) => {
                 },
               });
             }}
+            dateFormat="Pp"
           />
         </div>
         <div className="d-flex justify-content-end">

@@ -4,7 +4,7 @@ import { IUser } from "../../interfaces/User";
 interface LoginAction {
   type: ActionTypes.AUTHLOGIN;
   payLoad: {
-    user: IUser;
+    user: IUser | null;
   };
 }
 
@@ -12,4 +12,9 @@ interface LogoutAction {
   type: ActionTypes.AUTHLOGOUT;
 }
 
-export type AuthActionTypes = LoginAction | LogoutAction;
+export interface LoadingAction {
+  type: ActionTypes.AUTHLOADING;
+  payload: boolean;
+}
+
+export type AuthActionTypes = LoginAction | LogoutAction | LoadingAction;

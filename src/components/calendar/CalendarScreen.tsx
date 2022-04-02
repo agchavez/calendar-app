@@ -19,6 +19,7 @@ import "moment/locale/es";
 import { ActionTypes } from "../../state/types/types";
 import { EventActionTypes } from "../../state/actions/eventAction";
 import { useAppDispatch } from "../../hooks/redux";
+import iziToast from "izitoast";
 moment.locale("es");
 
 const events: CalendarData[] = [

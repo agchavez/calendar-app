@@ -26,6 +26,11 @@ export const authReducer = (
         checking: true,
         user: action.payLoad.user,
       };
+    case ActionTypes.AUTHLOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     default:
       return state;
   }
