@@ -9,7 +9,7 @@ import { CalendarEvent } from "./CalendarEvent";
 import { CalendarData } from "../../interfaces/Calendar";
 import { CalendarModal } from "./CalendarModal";
 
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import styles from "../../style/styles.module.css";
@@ -17,7 +17,6 @@ import styles from "../../style/styles.module.css";
 import moment from "moment";
 import "moment/locale/es";
 import { ActionTypes } from "../../state/types/types";
-import { EventActionTypes } from "../../state/actions/eventAction";
 import { useAppDispatch } from "../../hooks/redux";
 import iziToast from "izitoast";
 moment.locale("es");
@@ -41,7 +40,7 @@ export const CalendarScreen = () => {
     localStorage.getItem("lastView") || "month"
   );
 
-  const [open, setopen] = useState(false);
+  // const [open, setopen] = useState(false);
   const onDobleClick = (e: any) => {
     console.log(e);
   };
@@ -99,7 +98,7 @@ export const CalendarScreen = () => {
       <NavBar />
 
       <Container fluid className="px-3">
-        <h1>Calendario</h1>
+        <h1>Eventos</h1>
         <Calendar
           localizer={localizer}
           events={events}

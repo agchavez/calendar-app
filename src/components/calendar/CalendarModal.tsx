@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { FormEvent } from "../shared/FormEvent";
 import { RootState } from "../../state/reducers/index";
 import { ActionTypes } from "../../state/types/types";
