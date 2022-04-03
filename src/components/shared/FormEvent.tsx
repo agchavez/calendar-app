@@ -4,26 +4,25 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { Event } from "react-big-calendar";
+import { CalendarData } from "../../interfaces/Calendar";
 interface IFormEventProps {
   onSubmit: (event: Event) => void;
+  initialValues?: CalendarData | null;
 }
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("El titulo es requerido"),
-  describe: Yup.string().required("La descripción es requerida"),
   start: Yup.date().required("La fecha de inicio es requerida"),
   end: Yup.date().required("La fecha de fin es requerida"),
   allDay: Yup.boolean().required("El campo todo el día es requerido"),
 });
 
-export const FormEvent = ({ onSubmit }: IFormEventProps) => {
-  const handleSave = (event: Event) => {
-    console.log(event);
-  };
+export const FormEvent = ({ onSubmit, initialValues }: IFormEventProps) => {
+  const handleSave = (event: Event) => {};
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
-      initialValues: {
+      initialValues: initialValues || {
         title: "",
         describe: "",
         start: new Date(),
@@ -58,14 +57,14 @@ export const FormEvent = ({ onSubmit }: IFormEventProps) => {
             </span>
           )}
         </div>
-        <div className="form-group">
+
+        <div className="form-group mt-3">
           <label htmlFor="describe">Fecha de inicio</label>
           <DatePicker
             selected={values.start}
             className={`form-control ${
-              errors.title && touched.title ? "is-invalid" : ""
+              errors.start && touched.start ? "is-invalid" : ""
             }`}
-            
             onChange={(date: Date) => {
               handleChange({
                 target: {
@@ -74,12 +73,24 @@ export const FormEvent = ({ onSubmit }: IFormEventProps) => {
                 },
               });
             }}
+            showTimeSelect
+            dateFormat="Pp"
           />
+          {errors.start && touched.start && (
+            <span className="invalid-feedback">
+              {errors.start && touched.start ? errors.start : ""}
+            </span>
+          )}
         </div>
-        <div className="form-group">
+
+        <div className="form-group mt-3">
           <label htmlFor="describe">Fecha de final</label>
           <DatePicker
             selected={values.end}
+            showTimeSelect
+            className={`form-control ${
+              errors.end && touched.end ? "is-invalid" : ""
+            }`}
             onChange={(date: Date) => {
               handleChange({
                 target: {
@@ -88,11 +99,21 @@ export const FormEvent = ({ onSubmit }: IFormEventProps) => {
                 },
               });
             }}
+            dateFormat="Pp"
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Guardar
-        </button>
+        <div className="d-flex justify-content-end">
+          <button
+            type="submit"
+            className="btn btn-primary mt-3"
+            style={{
+              backgroundColor: "#0a1929",
+              borderColor: "#0a1929",
+            }}
+          >
+            Guardar
+          </button>
+        </div>
       </form>
     </>
   );
