@@ -3,7 +3,7 @@ export interface CalendarData {
   start: Date;
   end: Date;
   notes: string;
-  user: User;
+  _id?: string;
 }
 
 export interface User {

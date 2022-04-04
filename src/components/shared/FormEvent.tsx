@@ -5,8 +5,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Event } from "react-big-calendar";
 import { CalendarData } from "../../interfaces/Calendar";
+import { useDispatch } from "react-redux";
+import {
+  startAddNewEvent,
+  editEvent,
+} from "../../state/action-creators/eventsCreators";
 interface IFormEventProps {
-  onSubmit: (event: Event) => void;
+  onSubmit: (event: CalendarData) => void;
   initialValues?: CalendarData | null;
 }
 
@@ -14,26 +19,38 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().required("El titulo es requerido"),
   start: Yup.date().required("La fecha de inicio es requerida"),
   end: Yup.date().required("La fecha de fin es requerida"),
-  allDay: Yup.boolean().required("El campo todo el día es requerido"),
 });
 
 export const FormEvent = ({ onSubmit, initialValues }: IFormEventProps) => {
-  const handleSave = (event: Event) => {};
+  const dispatch = useDispatch();
+  const handleSave = (event: CalendarData) => {
+    initialValues?._id
+      ? dispatch(editEvent(event))
+      : dispatch(startAddNewEvent(event, handleReset));
+  };
 
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
-    useFormik({
-      initialValues: initialValues || {
-        title: "",
-        describe: "",
-        start: new Date(),
-        end: new Date(),
-        allDay: false,
-      },
-      validationSchema,
-      onSubmit: (values) => {
-        handleSave(values);
-      },
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleReset,
+  } = useFormik<CalendarData>({
+    initialValues: initialValues || {
+      title: "",
+      notes: "",
+      start: new Date(),
+      end: new Date(),
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+
+      handleSave(values);
+    },
+  });
 
   return (
     <>
@@ -102,6 +119,24 @@ export const FormEvent = ({ onSubmit, initialValues }: IFormEventProps) => {
             dateFormat="Pp"
           />
         </div>
+        <div className="form-group mt-3">
+          <label htmlFor="describe">Notas</label>
+          <textarea
+            name="notes"
+            id="notes"
+            className={`form-control ${
+              errors.notes && touched.notes ? "is-invalid" : ""
+            }`}
+            value={values.notes}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors.notes && touched.notes && (
+            <span className="invalid-feedback">
+              {errors.notes && touched.notes ? errors.notes : ""}
+            </span>
+          )}
+        </div>
         <div className="d-flex justify-content-end">
           <button
             type="submit"
@@ -111,7 +146,7 @@ export const FormEvent = ({ onSubmit, initialValues }: IFormEventProps) => {
               borderColor: "#0a1929",
             }}
           >
-            Guardar
+            {initialValues ? "Editar" : "Guardar"}
           </button>
         </div>
       </form>

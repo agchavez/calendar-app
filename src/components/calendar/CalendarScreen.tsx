@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavBar } from "../ui/NavBar";
 import { Container } from "react-bootstrap";
 
@@ -17,25 +17,17 @@ import styles from "../../style/styles.module.css";
 import moment from "moment";
 import "moment/locale/es";
 import { ActionTypes } from "../../state/types/types";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useSelectorApp } from "../../hooks/redux";
 import iziToast from "izitoast";
+import { RootState } from "../../state/reducers/index";
+import { startListEvents } from "../../state/action-creators/eventsCreators";
+import { useDispatch } from "react-redux";
 moment.locale("es");
-
-const events: CalendarData[] = [
-  {
-    title: "All Day Event very long title",
-    start: moment().toDate(),
-    end: moment().add(2, "hour").toDate(),
-    notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    user: {
-      _id: 12,
-      name: "Juan",
-    },
-  },
-];
 
 export const CalendarScreen = () => {
   const dispatch = useAppDispatch();
+  const dispatch_1 = useDispatch();
+  const { events } = useSelectorApp((state: RootState) => state.event);
   const [lastView, setlastView] = useState(
     localStorage.getItem("lastView") || "month"
   );
@@ -93,10 +85,13 @@ export const CalendarScreen = () => {
 
   const localizer = momentLocalizer(moment);
 
+  useEffect(() => {
+    dispatch_1(startListEvents());
+  }, [dispatch_1]);
+
   return (
     <>
       <NavBar />
-
       <Container fluid className="px-3">
         <h1>Eventos</h1>
         <Calendar
@@ -130,7 +125,6 @@ export const CalendarScreen = () => {
             <i className="fas fa-plus"></i>
           </span>
         </button>
-
         <CalendarModal />
       </Container>
     </>

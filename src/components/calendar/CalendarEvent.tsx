@@ -20,9 +20,7 @@ export const CalendarEvent = ({ event }: CalendarEventProps) => {
           ? event.title.substring(0, 16) + "..."
           : event.title}
       </p>
-      <span className="m-0">
-        {event.user.name} - {moment(event.start).format("DD/MM/YYYY")}
-      </span>
+      <span className="m-0">{event.notes}</span>
     </div>
   );
 };
