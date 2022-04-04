@@ -5,4 +5,29 @@ interface ISelectEventAction {
   payload: CalendarData | null;
 }
 
-export type EventActionTypes = ISelectEventAction;
+export interface IEventLoadingAction {
+  type: ActionTypes.EVENTLOADING;
+  payload: boolean;
+}
+
+interface IAddEventAction {
+  type: ActionTypes.EVENTADD;
+  payload: CalendarData;
+}
+
+interface IListEventAction {
+  type: ActionTypes.EVENTLIST;
+  payload: CalendarData[];
+}
+
+interface IEditEventAction {
+  type: ActionTypes.EVENTEDIT;
+  payload: CalendarData;
+}
+
+export type EventActionTypes =
+  | ISelectEventAction
+  | IEventLoadingAction
+  | IAddEventAction
+  | IListEventAction
+  | IEditEventAction;

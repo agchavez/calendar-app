@@ -103,6 +103,11 @@ export const LoginScreen = () => {
               <input
                 type="submit"
                 className="btnSubmit"
+                style={
+                  loading
+                    ? { backgroundColor: "grey", cursor: "not-allowed" }
+                    : {}
+                }
                 value="Login"
                 disabled={loading}
               />
@@ -204,6 +209,11 @@ export const LoginScreen = () => {
                 type="submit"
                 className="btnSubmit"
                 value="Crear cuenta"
+                style={
+                  loading
+                    ? { backgroundColor: "grey", cursor: "not-allowed" }
+                    : {}
+                }
                 disabled={loading}
               />
             </div>

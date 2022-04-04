@@ -26,6 +26,28 @@ export const eventReducer = (
         ...state,
         event: action.payload,
       };
+    case ActionTypes.EVENTLOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case ActionTypes.EVENTADD:
+      return {
+        ...state,
+        events: [...state.events, action.payload],
+      };
+    case ActionTypes.EVENTLIST:
+      return {
+        ...state,
+        events: [...action.payload],
+      };
+    case ActionTypes.EVENTEDIT:
+      return {
+        ...state,
+        events: state.events.map((event) =>
+          event._id === action.payload._id ? action.payload : event
+        ),
+      };
     default:
       return state;
   }
